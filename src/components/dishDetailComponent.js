@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
-
+import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, BreadcrumbItem, Breadcrumb} from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 class DishDetail extends Component{
     constructor(props){
@@ -19,9 +19,9 @@ class DishDetail extends Component{
         console.log('DishDetail Component componentDidUpdate invoked')
     }
 
-    getDetails(dish){
+    getDetails(dish, comments){
         if(dish!= null){
-            const details = dish.comments.map((comment) => {
+            const details = comments.map((comment) => {
                 return(
                     <div key = {comment.id}>
                         <CardText>{comment.comment}</CardText>
@@ -57,6 +57,17 @@ class DishDetail extends Component{
         if(dish != null){
             return (
                 <div className = "container">
+                <div className = "row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to = '/menu'> Menu </Link> </BreadcrumbItem>
+                        <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className = "col-12">
+                        <h3>{dish.name}</h3>
+                        <hr></hr>
+                    </div>
+
+                </div>
                     <div className = "row">
                         <div className = "col-md-5 col-12 m-1">
                             <Card>
@@ -69,7 +80,7 @@ class DishDetail extends Component{
                         </div>
 
                         <div className = "col-md-5 col-12 m-1">
-                            {this.getDetails(dish)}
+                            {this.getDetails(dish, this.props.comments)}
                         </div>
                     </div>
                     
